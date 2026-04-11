@@ -1,21 +1,16 @@
 package com.duoc.LearningPlatform.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.duoc.LearningPlatform.model.Curso;
 import com.duoc.LearningPlatform.service.CursoService;
 
-import jakarta.validation.constraints.Pattern;
-
-@Validated
 @RestController
 @RequestMapping("/api/v1/cursos")
 public class CursoController {
@@ -27,13 +22,29 @@ public class CursoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Curso>> listar(
-            @RequestParam(required = false) String categoria,
-            @RequestParam(required = false) @Pattern(regexp = "true|false") String activo) {
+    public ResponseEntity<List<Curso>> listarTodos() {
+        return ResponseEntity.ok(service.listarTodos());
+    }
 
-        Optional<Boolean> activoBool = Optional.ofNullable(activo).map(Boolean::parseBoolean);
-        List<Curso> cursos = service.listarCursos(Optional.ofNullable(categoria), activoBool);
+    @GetMapping("/indice/{indice}")
+    public ResponseEntity<Curso> listarPorIndice(@PathVariable int indice) {
+        return service.obtenerPorIndice(indice)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
-        return ResponseEntity.ok(cursos);
+    @GetMapping("/disponibilidad/{activo}")
+    public ResponseEntity<List<Curso>> listarPorDisponibilidad(@PathVariable boolean activo) {
+        return ResponseEntity.ok(service.listarPorDisponibilidad(activo));
+    }
+
+    @GetMapping("/categoria/{categoria}")
+    public ResponseEntity<List<Curso>> listarPorCategoria(@PathVariable String categoria) {
+        return ResponseEntity.ok(service.listarPorCategoria(categoria));
+    }
+
+    @GetMapping("/profesor/{profesor}")
+    public ResponseEntity<List<Curso>> listarPorProfesor(@PathVariable String profesor) {
+        return ResponseEntity.ok(service.listarPorProfesor(profesor));
     }
 }

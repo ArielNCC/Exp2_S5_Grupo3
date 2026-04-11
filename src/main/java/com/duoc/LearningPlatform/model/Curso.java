@@ -22,14 +22,19 @@ public class Curso {
     private String categoria;
 
     @Column(nullable = false)
+    private String profesor;
+
+    @Column(nullable = false)
     private boolean activo;
 
     public Curso() {
     }
 
-    public Curso(String nombre, String categoria, boolean activo) {
+    public Curso(String id, String nombre, String categoria, String profesor, boolean activo) {
+        this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
+        this.profesor = profesor;
         this.activo = activo;
     }
 
@@ -55,6 +60,14 @@ public class Curso {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public String getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(String profesor) {
+        this.profesor = profesor;
     }
 
     public boolean isActivo() {

@@ -12,7 +12,9 @@ public interface CursoRepository extends JpaRepository<Curso, String> {
 
 	List<Curso> findByActivo(boolean activo);
 
-	List<Curso> findByCategoria(String categoria);
+	List<Curso> findByCategoriaIgnoreCase(String categoria);
+
+	List<Curso> findByProfesorIgnoreCase(String profesor);
 
 	List<Curso> findByCategoriaAndActivo(String categoria, boolean activo);
 }
