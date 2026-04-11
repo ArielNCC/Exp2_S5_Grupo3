@@ -34,14 +34,8 @@ public class CursoService {
         return ordenar(repository.findAll());
     }
 
-    public Optional<Curso> obtenerPorIndice(int indice) {
-        List<Curso> cursos = listarTodos();
-
-        if (indice < 0 || indice >= cursos.size()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(cursos.get(indice));
+    public Optional<Curso> obtenerPorIndice(String indice) {
+        return repository.findByIndiceIgnoreCase(indice);
     }
 
     public List<Curso> listarPorDisponibilidad(boolean activo) {
@@ -60,7 +54,7 @@ public class CursoService {
 
         Comparator<Curso> porActivoPreferente = Comparator.comparingInt(c -> indexOrMax(c.isActivo(), prioridadActivos));
         Comparator<Curso> porNombre = Comparator.comparing(Curso::getNombre);
-        Comparator<Curso> comp = porActivoPreferente.thenComparing(porNombre).thenComparing(Curso::getId);
+        Comparator<Curso> comp = porActivoPreferente.thenComparing(porNombre).thenComparing(Curso::getIndice);
 
         return base.stream().sorted(comp).collect(Collectors.toList());
     }

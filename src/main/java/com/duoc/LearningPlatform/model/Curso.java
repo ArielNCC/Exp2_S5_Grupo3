@@ -15,6 +15,9 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Column(nullable = false, unique = true)
+    private String indice;
+
     @Column(nullable = false)
     private String nombre;
 
@@ -30,8 +33,8 @@ public class Curso {
     public Curso() {
     }
 
-    public Curso(String id, String nombre, String categoria, String profesor, boolean activo) {
-        this.id = id;
+    public Curso(String indice, String nombre, String categoria, String profesor, boolean activo) {
+        this.indice = indice;
         this.nombre = nombre;
         this.categoria = categoria;
         this.profesor = profesor;
@@ -44,6 +47,14 @@ public class Curso {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getIndice() {
+        return indice;
+    }
+
+    public void setIndice(String indice) {
+        this.indice = indice;
     }
 
     public String getNombre() {

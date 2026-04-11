@@ -27,7 +27,7 @@ public class CursoController {
     }
 
     @GetMapping("/indice/{indice}")
-    public ResponseEntity<Curso> listarPorIndice(@PathVariable int indice) {
+    public ResponseEntity<Curso> listarPorIndice(@PathVariable String indice) {
         return service.obtenerPorIndice(indice)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
