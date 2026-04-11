@@ -43,7 +43,7 @@ public class CursoService {
     }
 
     public List<Curso> listarPorCategoria(String categoria) {
-        return ordenar(repository.findByCategoriaIgnoreCase(categoria));
+        return ordenar(repository.findByCategoriaIgnoreCase(normalizarCategoria(categoria)));
     }
 
     public List<Curso> listarPorProfesor(String profesor) {
@@ -62,5 +62,13 @@ public class CursoService {
     private int indexOrMax(boolean valor, List<Boolean> orden) {
         int idx = orden.indexOf(valor);
         return idx < 0 ? Integer.MAX_VALUE : idx;
+    }
+
+    private String normalizarCategoria(String categoria) {
+        if (categoria == null) {
+            return "";
+        }
+
+        return categoria.trim().replace('-', ' ');
     }
 }

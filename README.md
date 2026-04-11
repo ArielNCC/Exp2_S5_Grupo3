@@ -112,7 +112,7 @@ curl -X GET "http://localhost:8080/api/v1/cursos/disponibilidad/false"
 Ejemplo:
 
 ```bash
-curl -X GET "http://localhost:8080/api/v1/cursos/categoria/Desarrollo%20de%20Software"
+curl -X GET "http://localhost:8080/api/v1/cursos/categoria/Desarrollo-de-Software"
 ```
 
 ---
