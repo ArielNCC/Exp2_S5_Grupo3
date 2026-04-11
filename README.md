@@ -32,6 +32,11 @@ Base URL local:
 
 ## Endpoints
 
+Nota para endpoints con texto en la ruta (categoria/profesor):
+
+- Usa `-` en lugar de espacios. Ejemplo: `Ana-Rojas`, `Desarrollo-de-Software`.
+- El backend convierte automaticamente `-` a espacio antes de consultar.
+
 ### 0) Saludo de inicio
 
 - Metodo: `GET`
@@ -128,7 +133,7 @@ curl -X GET "http://localhost:8080/api/v1/cursos/categoria/Desarrollo-de-Softwar
 Ejemplo:
 
 ```bash
-curl -X GET "http://localhost:8080/api/v1/cursos/profesor/Ana%20Rojas"
+curl -X GET "http://localhost:8080/api/v1/cursos/profesor/Ana-Rojas"
 ```
 
 ## Utilidades del proyecto

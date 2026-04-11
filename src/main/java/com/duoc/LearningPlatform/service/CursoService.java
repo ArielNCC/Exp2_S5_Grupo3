@@ -43,11 +43,11 @@ public class CursoService {
     }
 
     public List<Curso> listarPorCategoria(String categoria) {
-        return ordenar(repository.findByCategoriaIgnoreCase(normalizarCategoria(categoria)));
+        return ordenar(repository.findByCategoriaIgnoreCase(normalizarTextoPath(categoria)));
     }
 
     public List<Curso> listarPorProfesor(String profesor) {
-        return ordenar(repository.findByProfesorIgnoreCase(profesor));
+        return ordenar(repository.findByProfesorIgnoreCase(normalizarTextoPath(profesor)));
     }
 
     private List<Curso> ordenar(List<Curso> base) {
@@ -64,11 +64,11 @@ public class CursoService {
         return idx < 0 ? Integer.MAX_VALUE : idx;
     }
 
-    private String normalizarCategoria(String categoria) {
-        if (categoria == null) {
+    private String normalizarTextoPath(String valor) {
+        if (valor == null) {
             return "";
         }
 
-        return categoria.trim().replace('-', ' ');
+        return valor.trim().replace('-', ' ');
     }
 }
