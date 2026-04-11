@@ -1,25 +1,18 @@
 package com.duoc.LearningPlatform.repository;
 
-import com.duoc.LearningPlatform.model.Curso;
-import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.duoc.LearningPlatform.model.Curso;
+
 @Repository
-public class CursoRepository {
+public interface CursoRepository extends JpaRepository<Curso, String> {
 
-    private List<Curso> cursos = new ArrayList<>();
+	List<Curso> findByActivo(boolean activo);
 
-    public CursoRepository() {
-        cursos.add(new Curso(1L, "Java Básico", "Programación", true));
-        cursos.add(new Curso(2L, "Spring Boot", "Backend", true));
-        cursos.add(new Curso(3L, "Angular", "Frontend", false));
-        cursos.add(new Curso(4L, "Base de Datos", "SQL", true));
-        cursos.add(new Curso(5L, "Docker", "DevOps", true));
-    }
+	List<Curso> findByCategoria(String categoria);
 
-    public List<Curso> findAll() {
-        return cursos;
-    }
+	List<Curso> findByCategoriaAndActivo(String categoria, boolean activo);
 }

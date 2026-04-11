@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CursoService {
@@ -16,10 +17,16 @@ public class CursoService {
         this.repository = repository;
     }
 
-    // 🔥 Método solicitado: filtrar + ordenar + presentar
-    public List<Curso> obtenerCursosActivosOrdenados() {
-        return repository.findAll().stream()
-                .filter(Curso::isActivo)
+    public List<Curso> listarCursos(Optional<String> categoria, Optional<Boolean> activo) {
+        List<Curso> cursos = categoria
+                .map(cat -> activo
+                        .map(act -> repository.findByCategoriaAndActivo(cat, act))
+                        .orElseGet(() -> repository.findByCategoria(cat)))
+                .orElseGet(() -> activo
+                        .map(repository::findByActivo)
+                        .orElseGet(repository::findAll));
+
+        return cursos.stream()
                 .sorted(Comparator.comparing(Curso::getNombre))
                 .toList();
     }
