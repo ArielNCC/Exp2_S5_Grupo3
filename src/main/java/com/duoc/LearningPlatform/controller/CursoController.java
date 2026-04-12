@@ -2,6 +2,7 @@ package com.duoc.LearningPlatform.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,8 @@ import com.duoc.LearningPlatform.service.CursoService;
 @RequestMapping("/api/v1/cursos")
 public class CursoController {
 
-    private final CursoService service;
+    @Autowired
+    private CursoService service;
 
     public CursoController(CursoService service) {
         this.service = service;
