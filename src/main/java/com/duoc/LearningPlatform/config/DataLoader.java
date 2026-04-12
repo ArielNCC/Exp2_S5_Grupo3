@@ -1,6 +1,7 @@
 package com.duoc.LearningPlatform.config;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,7 @@ public class DataLoader {
         return args -> {
             cursos.deleteAll();
             ArrayList<Curso> cursosSemilla = new ArrayList<>();
-            cursosSemilla.addAll(java.util.List.of(
+                cursosSemilla.addAll(Arrays.asList(
                     new Curso("c001", "Fundamentos de Programacion", "Desarrollo de Software", "Ana Rojas", true),
                     new Curso("c002", "Antropología", "Humanidades", "Paula Fuentes", true),
                     new Curso("c003", "Desarrollo Backend I", "Desarrollo de Software", "Diego Morales", false),
