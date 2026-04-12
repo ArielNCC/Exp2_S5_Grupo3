@@ -141,7 +141,7 @@ curl -X GET "http://localhost:8080/api/v1/cursos/profesor/Ana-Rojas"
 ### Consola H2
 
 - URL: `http://localhost:8080/h2-console`
-- JDBC URL: `jdbc:h2:mem:deliverybd`
+- JDBC URL: `jdbc:h2:mem:cursosdb`
 - User: `sa`
 - Password: *(vacio)*
 
