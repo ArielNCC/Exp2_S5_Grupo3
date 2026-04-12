@@ -3,10 +3,8 @@ package com.duoc.LearningPlatform.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import com.duoc.LearningPlatform.model.Curso;
 import com.duoc.LearningPlatform.service.CursoService;
@@ -46,5 +44,26 @@ public class CursoController {
     @GetMapping("/profesor/{profesor}")
     public ResponseEntity<List<Curso>> listarPorProfesor(@PathVariable String profesor) {
         return ResponseEntity.ok(service.listarPorProfesor(profesor));
+    }
+
+    @PostMapping
+    public ResponseEntity<Curso> crearCurso(@RequestBody Curso curso) {
+        Curso nuevoCurso = service.crearCurso(curso);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoCurso); // Retorna 201 Created
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Curso> actualizarCurso(@PathVariable String id, @RequestBody Curso curso) {
+        return service.actualizarCurso(id, curso)
+                .map(ResponseEntity::ok) // Retorna 200 OK
+                .orElseGet(() -> ResponseEntity.notFound().build()); // Retorna 404 si no existe
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarCurso(@PathVariable String id) {
+        if (service.eliminarCurso(id)) {
+            return ResponseEntity.noContent().build(); // Retorna 204 No Content
+        }
+        return ResponseEntity.notFound().build(); // Retorna 404 si no existe
     }
 }

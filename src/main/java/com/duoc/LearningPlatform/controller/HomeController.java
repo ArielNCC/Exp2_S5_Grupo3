@@ -8,6 +8,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String saludo() {
-        return "LearningPlatform API version 1.0";
+        return "LearningPlatform API version 1.0 - Exp2_S5_Grupo 3";
     }
 }

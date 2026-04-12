@@ -50,6 +50,36 @@ public class CursoService {
         return ordenar(repository.findByProfesorIgnoreCase(normalizarTextoPath(profesor)));
     }
 
+
+    // Crear nuevo curso (POST)
+    public Curso crearCurso(Curso curso) {
+        return repository.save(curso);
+    }
+
+    // Actualizar curso existente (PUT)
+    public Optional<Curso> actualizarCurso(String id, Curso cursoActualizado) {
+        return repository.findById(id).map(cursoExistente -> {
+            // Actualizamos los campos permitidos
+            cursoExistente.setIndice(cursoActualizado.getIndice());
+            cursoExistente.setNombre(cursoActualizado.getNombre());
+            cursoExistente.setCategoria(cursoActualizado.getCategoria());
+            cursoExistente.setProfesor(cursoActualizado.getProfesor());
+            cursoExistente.setActivo(cursoActualizado.isActivo());
+            
+            // Guardamos el curso modificado en la bd
+            return repository.save(cursoExistente);
+        });
+    }
+
+    // Eliminar curso (DELETE)
+    public boolean eliminarCurso(String id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
     private List<Curso> ordenar(List<Curso> base) {
 
         Comparator<Curso> porActivoPreferente = Comparator.comparingInt(c -> indexOrMax(c.isActivo(), prioridadActivos));
