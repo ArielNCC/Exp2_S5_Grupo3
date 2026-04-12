@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,7 +31,7 @@ public class CursoService {
     }
 
     public ArrayList<Curso> listarTodos() {
-        return ordenar(new ArrayList<>(repository.findAll()));
+        return ordenar(repository.findAll());
     }
 
     public Optional<Curso> obtenerPorIndice(String indice) {
@@ -38,15 +39,15 @@ public class CursoService {
     }
 
     public ArrayList<Curso> listarPorDisponibilidad(boolean activo) {
-        return ordenar(new ArrayList<>(repository.findByActivo(activo)));
+        return ordenar(repository.findByActivo(activo));
     }
 
     public ArrayList<Curso> listarPorCategoria(String categoria) {
-        return ordenar(new ArrayList<>(repository.findByCategoriaIgnoreCase(normalizarTextoPath(categoria))));
+        return ordenar(repository.findByCategoriaIgnoreCase(normalizarTextoPath(categoria)));
     }
 
     public ArrayList<Curso> listarPorProfesor(String profesor) {
-        return ordenar(new ArrayList<>(repository.findByProfesorIgnoreCase(normalizarTextoPath(profesor))));
+        return ordenar(repository.findByProfesorIgnoreCase(normalizarTextoPath(profesor)));
     }
 
 
@@ -79,7 +80,7 @@ public class CursoService {
         return false;
     }
 
-    private List<Curso> ordenar(List<Curso> base) {
+    private ArrayList<Curso> ordenar(List<Curso> base) {
 
         Comparator<Curso> porActivoPreferente = Comparator.comparingInt(c -> indexOrMax(c.isActivo(), prioridadActivos));
         Comparator<Curso> porNombre = Comparator.comparing(Curso::getNombre);
