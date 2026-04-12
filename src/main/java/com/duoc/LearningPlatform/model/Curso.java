@@ -35,12 +35,4 @@ public class Curso {
 
     @Column(nullable = false)
     private boolean activo;
-
-    public Curso(String indice, String nombre, String categoria, String profesor, boolean activo) {
-        this.indice = indice;
-        this.nombre = nombre;
-        this.categoria = categoria;
-        this.profesor = profesor;
-        this.activo = activo;
-    }
 }
