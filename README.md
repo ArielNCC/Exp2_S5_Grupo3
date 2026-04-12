@@ -149,7 +149,10 @@ curl -X GET "http://localhost:8080/api/v1/cursos/profesor/Ana-Rojas"
 
 - Health: `http://localhost:8080/actuator/health`
 - Info: `http://localhost:8080/actuator/info`
-
+- Metricas `http://localhost:8080/actuator/metrics`
+- Metrica en específico `http://localhost:8080/metrics/TypeValue`
+> [!IMPORTANT] TypeValue es el valor específico a consultar del listado de metricas. 
+> 
 ## Nota de datos semilla
 
 Al iniciar la aplicacion, `DataLoader` elimina y vuelve a poblar los cursos para asegurar datos consistentes en cada arranque.

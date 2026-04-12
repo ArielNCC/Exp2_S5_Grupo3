@@ -50,7 +50,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
-		<!-- Habilita Bean Validation (Jakarta), necesario para anotaciones como @Pattern en controllers -->
+		<!-- Habilita Bean Validation (Jakarta), necesario para anotaciones como @Pattern en controllers y ordenar por disponibilidad True | False -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
