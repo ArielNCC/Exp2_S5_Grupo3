@@ -159,6 +159,6 @@ curl -X GET "http://localhost:8080/api/v1/cursos/profesor/Ana-Rojas"
 > [!IMPORTANT] TypeValue es el valor específico a consultar del listado de metricas. 
 > [!IMPORTANT] loggers se debe consultar como POST Body Json configuredLevel - leveldeseado, datos obtenidos del GET para loggers - levels - Root.
 
-## Nota de datos semilla
+## Nota de data seader
 
 Al iniciar la aplicacion, `DataLoader` elimina y vuelve a poblar los cursos para asegurar datos consistentes en cada arranque.
