@@ -1,6 +1,6 @@
 package com.duoc.LearningPlatform.controller;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +22,7 @@ public class CursoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Curso>> listarTodos() {
+    public ResponseEntity<ArrayList<Curso>> listarTodos() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
@@ -34,17 +34,17 @@ public class CursoController {
     }
 
     @GetMapping("/disponibilidad/{activo}")
-    public ResponseEntity<List<Curso>> listarPorDisponibilidad(@PathVariable boolean activo) {
+    public ResponseEntity<ArrayList<Curso>> listarPorDisponibilidad(@PathVariable boolean activo) {
         return ResponseEntity.ok(service.listarPorDisponibilidad(activo));
     }
 
     @GetMapping("/categoria/{categoria}")
-    public ResponseEntity<List<Curso>> listarPorCategoria(@PathVariable String categoria) {
+    public ResponseEntity<ArrayList<Curso>> listarPorCategoria(@PathVariable String categoria) {
         return ResponseEntity.ok(service.listarPorCategoria(categoria));
     }
 
     @GetMapping("/profesor/{profesor}")
-    public ResponseEntity<List<Curso>> listarPorProfesor(@PathVariable String profesor) {
+    public ResponseEntity<ArrayList<Curso>> listarPorProfesor(@PathVariable String profesor) {
         return ResponseEntity.ok(service.listarPorProfesor(profesor));
     }
 }

@@ -1,6 +1,6 @@
 package com.duoc.LearningPlatform.config;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,8 @@ public class DataLoader {
     CommandLineRunner seed(CursoRepository cursos) {
         return args -> {
             cursos.deleteAll();
-            cursos.saveAll(List.of(
+            ArrayList<Curso> cursosSemilla = new ArrayList<>();
+            cursosSemilla.addAll(java.util.List.of(
                     new Curso("c001", "Fundamentos de Programacion", "Desarrollo de Software", "Ana Rojas", true),
                     new Curso("c002", "Antropología", "Humanidades", "Paula Fuentes", true),
                     new Curso("c003", "Desarrollo Backend I", "Desarrollo de Software", "Diego Morales", false),
@@ -33,6 +34,7 @@ public class DataLoader {
                     new Curso("c014", "Fundamentos de antropología", "Humanidades", "Paula Fuentes", true),
                     new Curso("c015", "Fundamentos de programación", "Desarrollo de Software", "Diego Morales", true)
             ));
+            cursos.saveAll(cursosSemilla);
         };
     }
 }

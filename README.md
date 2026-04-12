@@ -151,8 +151,14 @@ curl -X GET "http://localhost:8080/api/v1/cursos/profesor/Ana-Rojas"
 - Info: `http://localhost:8080/actuator/info`
 - Metricas `http://localhost:8080/actuator/metrics`
 - Metrica en específico `http://localhost:8080/metrics/TypeValue`
+- Variables de entorno `http://localhost:8080/actuator/env`
+- loggers GET `http://localhost:8080/actuator/loggers`
+- loggers Warn POST `http://localhost:8080/actuator/loggers/nombredelms`
+- beans `http://localhost:8080/beans`
+
 > [!IMPORTANT] TypeValue es el valor específico a consultar del listado de metricas. 
-> 
+> [!IMPORTANT] loggers se debe consultar como POST Body Json configuredLevel - leveldeseado, datos obtenidos del GET para loggers - levels - Root.
+
 ## Nota de datos semilla
 
 Al iniciar la aplicacion, `DataLoader` elimina y vuelve a poblar los cursos para asegurar datos consistentes en cada arranque.
