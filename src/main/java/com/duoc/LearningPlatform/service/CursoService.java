@@ -3,7 +3,9 @@ package com.duoc.LearningPlatform.service;
 import java.util.ArrayList;
 import com.duoc.LearningPlatform.model.Curso;
 import com.duoc.LearningPlatform.repository.CursoRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Comparator;
 import java.util.Optional;
@@ -46,14 +48,16 @@ public class CursoService {
     // Actualizar curso existente (PUT)
     public Optional<Curso> actualizarCurso(String id, Curso cursoActualizado) {
         return repository.findById(id).map(cursoExistente -> {
-            // Actualizamos los campos permitidos
-            cursoExistente.setIndice(cursoActualizado.getIndice());
+            if (cursoActualizado.getIndice() != null
+                    && !cursoActualizado.getIndice().equalsIgnoreCase(cursoExistente.getIndice())) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No se permite cambiar el indice del curso");
+            }
+
             cursoExistente.setNombre(cursoActualizado.getNombre());
             cursoExistente.setCategoria(cursoActualizado.getCategoria());
             cursoExistente.setProfesor(cursoActualizado.getProfesor());
             cursoExistente.setActivo(cursoActualizado.isActivo());
-            
-            // Guardamos el curso modificado en la bd
+
             return repository.save(cursoExistente);
         });
     }

@@ -1,11 +1,14 @@
 package com.duoc.LearningPlatform.controller;
 
 import java.util.ArrayList;
+import java.util.Map;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 
 import com.duoc.LearningPlatform.model.Curso;
 import com.duoc.LearningPlatform.service.CursoService;
@@ -28,6 +31,10 @@ public class CursoController {
 
     @GetMapping("/cursos/indice/{indice}")
     public ResponseEntity<Curso> listarPorIndice(@PathVariable String indice) {
+        if (indice == null || indice.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         return service.obtenerPorIndice(indice)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -50,22 +57,56 @@ public class CursoController {
 
     @PostMapping("/cursos")
     public ResponseEntity<Curso> crearCurso(@RequestBody Curso curso) {
+        if (cursoInvalido(curso)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
         Curso nuevoCurso = service.crearCurso(curso);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoCurso); // Retorna 201 Created
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoCurso);
     }
 
     @PutMapping("/cursos/{id}")
     public ResponseEntity<Curso> actualizarCurso(@PathVariable String id, @RequestBody Curso curso) {
+        if (id == null || id.isBlank() || cursoInvalido(curso)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
         return service.actualizarCurso(id, curso)
-                .map(ResponseEntity::ok) // Retorna 200 OK
-                .orElseGet(() -> ResponseEntity.notFound().build()); // Retorna 404 si no existe
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/cursos/{id}")
     public ResponseEntity<Void> eliminarCurso(@PathVariable String id) {
-        if (service.eliminarCurso(id)) {
-            return ResponseEntity.noContent().build(); // Retorna 204 No Content
+        if (id == null || id.isBlank()) {
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.notFound().build(); // Retorna 404 si no existe
+
+        if (service.eliminarCurso(id)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @RequestMapping("/**")
+    public ResponseEntity<Map<String, Object>> endpointNoImplementado(HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(Map.of(
+                "status", HttpStatus.NOT_IMPLEMENTED.value(),
+                "error", HttpStatus.NOT_IMPLEMENTED.getReasonPhrase(),
+                "message", "Endpoint no implementado para /api/v1",
+                "path", request.getRequestURI()
+        ));
+    }
+
+    private boolean cursoInvalido(Curso curso) {
+        return curso == null
+                || esVacio(curso.getIndice())
+                || esVacio(curso.getNombre())
+                || esVacio(curso.getCategoria())
+                || esVacio(curso.getProfesor());
+    }
+
+    private boolean esVacio(String valor) {
+        return valor == null || valor.isBlank();
     }
 }
