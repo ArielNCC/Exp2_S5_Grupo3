@@ -1,8 +1,8 @@
-Get /cursos
-Get /cursos/indice/{indice}
-Get /cursos/disponibilidad/{activo}
-Get /cursos/categoria/{categoria}
-Get /cursos/profesor/{profesor}
+Get api/v1/cursos
+Get api/v1/cursos/indice/{indice}
+Get api/v1/cursos/disponibilidad/{activo}
+Get api/v1/cursos/categoria/{categoria}
+Get api/v1/cursos/profesor/{profesor}
 
 Post /cursos
 

@@ -1,10 +1,8 @@
 package com.duoc.LearningPlatform.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import com.duoc.LearningPlatform.model.Curso;
 import com.duoc.LearningPlatform.repository.CursoRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -14,19 +12,9 @@ import java.util.Optional;
 public class CursoService {
 
     private final CursoRepository repository;
-    private final ArrayList<Boolean> prioridadActivos;
 
-    public CursoService(CursoRepository repository, @Value("${app.cursos.prioridad}") String prioridadActivos) {
+    public CursoService(CursoRepository repository) {
         this.repository = repository;
-
-        if (prioridadActivos == null || prioridadActivos.isBlank()) {
-            this.prioridadActivos = new ArrayList<>();
-        } else {
-            this.prioridadActivos = Arrays.stream(prioridadActivos.split(","))
-                    .map(String::trim)
-                    .map(Boolean::parseBoolean)
-                    .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
-        }
     }
 
     public ArrayList<Curso> listarTodos() {
@@ -81,16 +69,11 @@ public class CursoService {
 
     private ArrayList<Curso> ordenar(ArrayList<Curso> base) {
 
-        Comparator<Curso> porActivoPreferente = Comparator.comparingInt(c -> indexOrMax(c.isActivo(), prioridadActivos));
-        Comparator<Curso> porNombre = Comparator.comparing(Curso::getNombre);
-        Comparator<Curso> comp = porActivoPreferente.thenComparing(porNombre).thenComparing(Curso::getIndice);
+        Comparator<Curso> porDisponible = Comparator.comparing(Curso::isActivo).reversed();
+        Comparator<Curso> porIndiceAsc = Comparator.comparing(Curso::getIndice, String.CASE_INSENSITIVE_ORDER);
+        Comparator<Curso> comp = porDisponible.thenComparing(porIndiceAsc);
 
         return base.stream().sorted(comp).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
-    }
-
-    private int indexOrMax(boolean valor, ArrayList<Boolean> orden) {
-        int idx = orden.indexOf(valor);
-        return idx < 0 ? Integer.MAX_VALUE : idx;
     }
 
     private String normalizarTextoPath(String valor) {
