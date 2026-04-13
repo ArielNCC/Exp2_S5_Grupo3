@@ -24,6 +24,15 @@ public class CursoController {
         this.service = service;
     }
 
+    @GetMapping
+    public ResponseEntity<Map<String, Object>> inicio() {
+        return ResponseEntity.ok(Map.of(
+                "status", HttpStatus.OK.value(),
+                "message", "LearningPlatform API version 1.0",
+                "basePath", "/api/v1"
+        ));
+    }
+
     @GetMapping("/cursos")
     public ResponseEntity<ArrayList<Curso>> listarTodos() {
         return ResponseEntity.ok(service.listarTodos());
