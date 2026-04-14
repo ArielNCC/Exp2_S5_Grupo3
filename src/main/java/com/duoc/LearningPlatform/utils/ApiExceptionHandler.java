@@ -1,4 +1,4 @@
-package com.duoc.LearningPlatform.controller;
+package com.duoc.LearningPlatform.utils;
 
 import java.util.Map;
 
